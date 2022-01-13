@@ -12,11 +12,11 @@ env:
   
 jobs:
   build_and_deploy:
-    runs-on: ubuntu-latest
     environment:
       name: Preview-url
       url: 'https://www.google.com'
       
+    runs-on: ubuntu-latest
     steps:
       - name: Cloning the Repository
         uses: actions/checkout@v2
@@ -37,4 +37,15 @@ jobs:
           entryPoint: ./frontend
           
       - name: Echo the url
-        run: echo Hello '${{ env.DEPLOY_URL }}' url '${{steps.deploy.outputs.details_url}}' expiretime "${{steps.deploy.outputs.expire_time}}" urlList  "${{steps.deploy.outputs.urls}}"
+        run: echo Hello '${{ env.DEPLOY_URL }}' url '${{ steps.deploy.outputs.details_url }}' expiretime "${{ steps.deploy.outputs.expire_time }}" urlList  "${{ steps.deploy.outputs.urls }}"
+
+
+      - name: Create commit comment
+        uses: peter-evans/commit-comment@v1
+        with:
+         body: |
+          This webapp is hosted at the following url:
+          - [${{steps.deploy.outputs.urls}}](${{steps.deploy.outputs.urls}})
+          - **URL** ${{steps.deploy.outputs.urls}}
+          - ${{steps.deploy.outputs.details_url}}
+          - **Expire on** ${{steps.deploy.outputs.expire_time}}
