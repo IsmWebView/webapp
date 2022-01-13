@@ -9,12 +9,17 @@ name: Deploy to Firebase Hosting on merge
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: Preview
+      url: ${{ steps.firebase-deploy.outputs.details_url }}
+      
     steps:
       - uses: actions/checkout@v2
       - run: |
           cd frontend
           npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: firebase-deploy
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEBAPP_ISM }}'
