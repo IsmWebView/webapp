@@ -6,12 +6,16 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - '*/*'
+
+env:
+  DEPLOY_URL: "https://www.google.com"
+  
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     environment:
       name: Preview-url
-      url: '${{ steps.firebase-deploy.outputs.details_url }}'
+      url: ${{ steps.firebase-deploy.outputs.details_url }}
       
     steps:
       - name: Cloning the Repository
@@ -33,4 +37,4 @@ jobs:
           entryPoint: ./frontend
           
       - name: Echo the url
-        run: echo Hello ${{ steps.firebase-deploy.outputs.details_url }}
+        run: echo Hello "${{ env.DEPLOY_URL }}"
