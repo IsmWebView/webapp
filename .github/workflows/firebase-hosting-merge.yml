@@ -15,13 +15,15 @@ jobs:
       
     steps:
       - name: Cloning the Repository
-      - uses: actions/checkout@v2
-      - run: |
+        uses: actions/checkout@v2
+        
+      - name: Running npm Build
+        run: |
           cd frontend
           npm ci && npm run build
       
       - name: Deploying to Firebase
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: FirebaseExtended/action-hosting-deploy@v0
         id: firebase-deploy
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -31,4 +33,4 @@ jobs:
           entryPoint: ./frontend
           
       - name: Echo the url
-      - run: echo ${{ steps.firebase-deploy.outputs.details_url }}
+        run: echo ${{ steps.firebase-deploy.outputs.details_url }}
