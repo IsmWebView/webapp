@@ -10,14 +10,17 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     environment:
-      name: Preview
-      url: ${{ steps.firebase-deploy.outputs.details_url }}
+      name: Preview-url
+      url: '${{ steps.firebase-deploy.outputs.details_url }}'
       
     steps:
+      - name: Cloning the Repository
       - uses: actions/checkout@v2
       - run: |
           cd frontend
           npm ci && npm run build
+      
+      - name: Deploying to Firebase
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: firebase-deploy
         with:
@@ -26,3 +29,6 @@ jobs:
           channelId: live
           projectId: webapp-ism
           entryPoint: ./frontend
+          
+      - name: Echo the url
+      - run: echo ${{ steps.firebase-deploy.outputs.details_url }}
