@@ -37,4 +37,4 @@ jobs:
           entryPoint: ./frontend
           
       - name: Echo the url
-        run: echo Hello '${{ env.DEPLOY_URL }}' url '${{steps.deploy.outputs}}'
+        run: echo Hello '${{ env.DEPLOY_URL }}' url '${{steps.deploy.outputs.details_url}}' expiretime "${{steps.deploy.outputs.expire_time}}" urlList  "${{steps.deploy.outputs.urls}}"
