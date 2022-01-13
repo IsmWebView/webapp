@@ -8,14 +8,14 @@ name: Deploy to Firebase Hosting on merge
       - '*/*'
 
 env:
-  DEPLOY_URL: "https://www.google.com"
+  DEPLOY_URL: 'https://www.google.com'
   
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     environment:
       name: Preview-url
-      url: ${{ env.DEPLOY_URL }}
+      url: 'https://www.google.com'
       
     steps:
       - name: Cloning the Repository
@@ -28,7 +28,7 @@ jobs:
       
       - name: Deploying to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
-        id: firebase-deploy
+        id: deploy
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEBAPP_ISM }}'
@@ -37,4 +37,4 @@ jobs:
           entryPoint: ./frontend
           
       - name: Echo the url
-        run: echo Hello "${{ env.DEPLOY_URL }}"
+        run: echo Hello '${{ env.DEPLOY_URL }}' url '${{steps.deploy.outputs.details_url}}'
