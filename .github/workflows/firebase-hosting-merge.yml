@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Preview-url
-      url: ${{ steps.firebase-deploy.outputs.details_url }}
+      url: ${{ env.DEPLOY_URL }}
       
     steps:
       - name: Cloning the Repository
