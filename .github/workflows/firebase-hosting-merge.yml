@@ -10,13 +10,13 @@ name: Deploy to Firebase Hosting on merge
 env:
   DEPLOY_URL: https://www.google.com
   
+
 jobs:
   build_and_deploy:
+    runs-on: ubuntu-latest
     environment:
       name: Preview-url
       url: https://www.google.com
-      
-    runs-on: ubuntu-latest
     steps:
       - name: Cloning the Repository
         uses: actions/checkout@v2
