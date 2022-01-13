@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Preview-url
-      url: '${{ steps.firebase-deploy.outputs.details_url }}'
+      url: ${{ steps.firebase-deploy.outputs.details_url }}
       
     steps:
       - name: Cloning the Repository
@@ -33,4 +33,4 @@ jobs:
           entryPoint: ./frontend
           
       - name: Echo the url
-        run: echo ${{ steps.firebase-deploy.outputs.details_url }}
+        run: echo "${{ steps.firebase-deploy.outputs.details_url }}"
